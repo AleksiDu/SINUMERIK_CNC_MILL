@@ -1,0 +1,17 @@
+{
+  "CYCLE800": {
+    "prefix": "CYCLE800",
+    "body": [
+      "CYCLE800",
+      "  R0.2",
+      "  DRILL",
+      "  Z-10",
+      "  Z-20",
+      "  Z-50",
+      "  Z-80",
+      "  Z-100;",
+      "$1"
+    ],
+    "description": "Drilling cycle"
+  }
+}
