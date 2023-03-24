@@ -1,17 +1,233 @@
 {
-  "CYCLE800": {
-    "prefix": "CYCLE800",
-    "body": [
-      "CYCLE800",
-      "  R0.2",
-      "  DRILL",
-      "  Z-10",
-      "  Z-20",
-      "  Z-50",
-      "  Z-80",
-      "  Z-100;",
-      "$1"
-    ],
-    "description": "Drilling cycle"
+  "scopeName": "source.MPF",
+  "name": "SINUMERIK-CNC-MILL",
+  "patterns": [
+    {
+      "include": "#all"
+    }
+  ],
+  "repository": {
+    "all": {
+      "patterns": [
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#axis"
+        },
+        {
+          "include": "#gcodes"
+        },
+        {
+          "include": "#mcodes"
+        },
+        {
+          "include": "#cycles"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#speed"
+        },
+        {
+          "include": "#feed"
+        },
+        {
+          "include": "#linenumber"
+        },
+        {
+          "include": "#tools"
+        },
+
+        {
+          "include": "#functions"
+        },
+        {
+          "include": "#statements"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.MPF",
+          "match": "(\\(.+\\))"
+        },
+        {
+          "name": "comment.MPF",
+          "begin": ";",
+          "end": "\\n"
+        }
+      ]
+    },
+    "axis": {
+      "patterns": [
+        {
+          "match": "(?i)([X])\\s?(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]))",
+          "name": "string.MPF"
+        },
+        {
+          "match": "(?i)([Y])\\s?(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]))",
+          "name": "string.MPF"
+        },
+        {
+          "match": "(?i)([Z])\\s?(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]))",
+          "name": "invalid.MPF"
+        },
+        {
+          "match": "(?i)([ABC])\\s?(\\-*\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]))",
+          "name": "constant.character.escape.MPF"
+        }
+      ]
+    },
+    "statements": {
+      "patterns": [
+        {
+          "match": "(?i)(GOTO|GOTOB|GOTOF\\s?\\d+)",
+          "name": "keyword.control.MPF"
+        },
+        {
+          "match": "(?i)(EQ|NE|LT|GT|LE|GE|AND|OR|NOT)",
+          "name": "keyword.control.MPF"
+        },
+        {
+          "match": "(?i)(DO\\s?\\d*|WHILE|WH|END|IF|THEN|ELSE|ENDIF|FOR|ENDFOR|LOOP|ENDLOOP|REPEAT|UNTIL)",
+          "name": "keyword.control.MPF"
+        },
+        {
+          "match": "([\\%])",
+          "name": "string.MPF"
+        }
+      ]
+    },
+    "gcodes": {
+      "patterns": [
+        {
+          "match": "(?i)[G](1)?5[4-9](.1)?\\s?(P[0-9]{1,3})?",
+          "name": "constant.numeric.MPF"
+        },
+        {
+          "match": "(?i)[G]1[1-2][0-9]",
+          "name": "constant.numeric.MPF"
+        },
+        {
+          "match": "(?i)[G]15\\s?(H[0-9]{1,2})?",
+          "name": "constant.numeric.MPF"
+        },
+        {
+          "match": "(?i)[G][0-9]{1,3}(\\.[0-9])?",
+          "name": "markup.bold.MPF"
+        }
+      ]
+    },
+    "mcodes": {
+      "patterns": [
+        {
+          "match": "(?i)[M][0-9]{1,3}",
+          "name": "keyword.operator.quantifier.regexp.MPF"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "match": "(?i)(SIN|COS|TAN|ASIN|ACOS|ATAN|FIX|FUP|LN|ROUND|SQRT)",
+          "name": "support.constant.math.MPF"
+        },
+        {
+          "match": "(?i)(FIX|FUP|ROUND|ABS|MOD)",
+          "name": "support.constant.math.MPF"
+        },
+        {
+          "match": "(\\<|\\>|\\=)",
+          "name": "support.constant.math.MPF"
+        },
+        {
+          "match": "(\\+|\\*|\\/|\\*\\*)",
+          "name": "support.constant.math.MPF"
+        },
+        {
+          "match": "(\\-)",
+          "name": "invalid.MPF"
+        }
+      ]
+    },
+    "speed": {
+      "patterns": [
+        {
+          "match": "(?i)([S])\\s?(\\d+|(?=[#\\[]))",
+          "name": "constant.language.MPF"
+        }
+      ]
+    },
+    "feed": {
+      "patterns": [
+        {
+          "match": "(?i)([F])\\s?\\.?(\\d+(\\.\\d*)?|(?=[#\\[]))",
+          "name": "constant.language.MPF"
+        }
+      ]
+    },
+    "linenumber": {
+      "patterns": [
+        {
+          "match": "(?i)(^[N])(\\d+)",
+          "name": "constant.numeric.MPF"
+        },
+        {
+          "match": "(?i)(^[O])(\\d+)?",
+          "name": "string.regexp.MPF"
+        },
+        {
+          "match": "(?i)([P])\\s?(\\d?\\.?\\d+\\.?|\\.?(?=[#\\[]))",
+          "name": "string.regexp.MPF"
+        }
+      ]
+    },
+    "tools": {
+      "patterns": [
+        {
+          "match": "(?i)([D])\\s?(\\d+(\\.\\d*)?|(?=[#\\[]))",
+          "name": "constant.character.MPF"
+        },
+        {
+          "match": "(?i)([H])\\s?(\\d+(\\.\\d*)?|(?=[#\\[]))",
+          "name": "constant.character.MPF"
+        },
+        {
+          "match": "(?i)([T])\\s?(\\d+(\\.\\d*)?|(?=[#\\[]))",
+          "name": "constant.character.MPF"
+        }
+      ]
+    },
+    "modifiers": {
+      "patterns": [
+        {
+          "match": "(?i)([IJK])(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]))",
+          "name": "constant.character.escape.MPF"
+        },
+        {
+          "match": "(?i)([QR])(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]]))",
+          "name": "support.constant.math.MPF"
+        },
+        {
+          "match": "(?i)([UW])(\\-?\\d*\\.?\\d+\\.?|\\-?\\.?(?=[#\\[]]))",
+          "name": "support.constant.math.MPF"
+        }
+      ]
+    },
+    "cycles": {
+      "patterns": [
+        {
+          "match": "[#][0-9]*",
+          "name": "variable.other.MPF"
+        },
+        {
+          "match": "(?i)([CYCLE])((\\d+(\\.\\d*)?|(?=[#\\[])))",
+          "name": "constant.character.MPF"
+        }
+      ]
+    }
   }
 }

@@ -53,6 +53,7 @@ export class SinumerikCNCSyntaxColorizer {
     "$A", // Current values
     "$V", // Service data
   ];
+
   public provideDocumentColors(
     document: vscode.TextDocument
   ): vscode.ColorInformation[] {
